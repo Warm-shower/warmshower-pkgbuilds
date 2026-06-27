@@ -27,7 +27,13 @@ on:
         required: true
       WS_SIGNING_KEY_PASSPHRASE:
         required: true
-      REPO_PUBLISH_TOKEN:
+      R2_ACCESS_KEY_ID:
+        required: true
+      R2_SECRET_ACCESS_KEY:
+        required: true
+      R2_ACCOUNT_ID:
+        required: true
+      R2_BUCKET:
         required: true
 
 jobs:
@@ -65,7 +71,6 @@ jobs:
           WS_SIGNING_KEY_PASSPHRASE: ${{ secrets.WS_SIGNING_KEY_PASSPHRASE }}
         run: |
           echo "$WS_SIGNING_KEY" | gpg --batch --import
-          # Warm up the key agent
           echo "$WS_SIGNING_KEY_PASSPHRASE" | gpg --batch --passphrase-fd 0 \
             --pinentry-mode loopback --sign /dev/null 2>/dev/null || true
 
@@ -102,17 +107,15 @@ jobs:
           name: ${{ inputs.package_dir }}-packages
           path: packages/
 
-      - name: Publish to WarmShower repository
-        env:
-          REPO_PUBLISH_TOKEN: ${{ secrets.REPO_PUBLISH_TOKEN }}
-        run: |
-          # Upload each package and its signature to the WarmShower package repository.
-          # The actual upload mechanism depends on the hosting decision (WS-036a):
-          #   - Cloudflare R2: use wrangler or rclone with R2 credentials
-          #   - GitHub Releases: use gh release upload
-          #   - Self-hosted: use rsync/scp
-          #
-          # TODO (WS-036a): Implement upload once hosting provider is chosen.
-          echo "Package files ready for upload:"
-          ls -la packages/
-          echo "PENDING: hosting provider not yet selected (WS-036a)"
+      - name: Publish to WarmShower R2 repository
+        # Uses the r2-publish reusable workflow.
+        # All credentials come from GitHub org-level secrets — nothing is hardcoded.
+        # The public repository URL is configured via WS_PACKAGE_REPOSITORY (GitHub variable).
+        # To switch from the temporary R2 endpoint to repo.warmshower.ai:
+        # update WS_PACKAGE_REPOSITORY in GitHub org variables — no code changes needed.
+        # See: docs/cloudflare-r2-setup.md for full setup instructions.
+        uses: ./.github/workflows/r2-publish.yml
+        with:
+          package_dir: packages/
+          arch: ${{ inputs.arch }}
+        secrets: inherit

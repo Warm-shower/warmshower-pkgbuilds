@@ -90,6 +90,24 @@ rclone copy --checksum packages/ warmshower-r2:warmshower-repo/x86_64/
 
 ---
 
+## Configurable Repository URL
+
+The repository URL is a **single configurable variable** — never hardcoded anywhere:
+
+**Variable name:** `WS_PACKAGE_REPOSITORY` (GitHub Actions variable, not a secret)
+
+| Phase | Value |
+|---|---|
+| Temporary | `https://YOUR_R2_ACCOUNT_ID.r2.cloudflarestorage.com/warmshower` |
+| Production | `https://repo.warmshower.ai` |
+
+To switch from the temporary endpoint to production: update `WS_PACKAGE_REPOSITORY` only.
+No workflows, scripts, or PKGBUILDs need to change. This is the sole configuration point.
+
+Set it in: **GitHub → Warm-shower org → Settings → Secrets and variables → Actions → Variables**
+
+---
+
 ## Cost Estimate
 
 For a repository with 100 packages at ~30MB average:
