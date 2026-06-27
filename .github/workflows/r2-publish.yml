@@ -1,0 +1,156 @@
+name: Publish Package to R2
+
+# Reusable workflow — uploads a signed package to the WarmShower Cloudflare R2 repository
+# and updates the pacman repository database (warmshower.db).
+#
+# All credentials are read from GitHub org-level secrets.
+# The repository URL is configured via WS_PACKAGE_REPOSITORY (GitHub variable).
+# To switch from the temporary R2 endpoint to repo.warmshower.ai: update that variable only.
+#
+# Required secrets (org or repo level):
+#   R2_ACCESS_KEY_ID          — Cloudflare R2 access key ID
+#   R2_SECRET_ACCESS_KEY      — Cloudflare R2 secret access key
+#   R2_ACCOUNT_ID             — Cloudflare account ID
+#   R2_BUCKET                 — R2 bucket name (e.g. warmshower-repo)
+#   WS_SIGNING_KEY            — GPG CI signing subkey (armored export-secret-subkeys)
+#   WS_SIGNING_KEY_PASSPHRASE — Passphrase for the signing key
+#
+# Required variables (org or repo level):
+#   WS_PACKAGE_REPOSITORY     — Base URL of the package repository
+#                               Never hardcoded. Example values:
+#                               https://YOUR_R2_ACCOUNT_ID.r2.cloudflarestorage.com/warmshower
+#                               https://repo.warmshower.ai
+
+on:
+  workflow_call:
+    inputs:
+      package_dir:
+        description: "Directory containing the built *.pkg.tar.zst files"
+        required: true
+        type: string
+      arch:
+        description: "Architecture tier (x86_64, x86_64_v3, x86_64_v4, znver4)"
+        required: false
+        default: "x86_64"
+        type: string
+    secrets:
+      R2_ACCESS_KEY_ID:
+        required: true
+      R2_SECRET_ACCESS_KEY:
+        required: true
+      R2_ACCOUNT_ID:
+        required: true
+      R2_BUCKET:
+        required: true
+      WS_SIGNING_KEY:
+        required: true
+      WS_SIGNING_KEY_PASSPHRASE:
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # Only publish from master branch pushes — never from PRs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
+
+      - name: Configure rclone for Cloudflare R2
+        env:
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+        run: |
+          # Write rclone config using env vars — no credentials written to permanent disk location
+          cat > /tmp/rclone.conf << EOF
+          [warmshower-r2]
+          type = s3
+          provider = Cloudflare
+          access_key_id = ${R2_ACCESS_KEY_ID}
+          secret_access_key = ${R2_SECRET_ACCESS_KEY}
+          endpoint = https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com
+          acl = public-read
+          EOF
+          chmod 600 /tmp/rclone.conf
+
+      - name: Import WarmShower signing key
+        env:
+          WS_SIGNING_KEY: ${{ secrets.WS_SIGNING_KEY }}
+          WS_SIGNING_KEY_PASSPHRASE: ${{ secrets.WS_SIGNING_KEY_PASSPHRASE }}
+        run: |
+          echo "$WS_SIGNING_KEY" | gpg --batch --import
+          echo "$WS_SIGNING_KEY_PASSPHRASE" | gpg --batch --passphrase-fd 0 \
+            --pinentry-mode loopback --sign /dev/null 2>/dev/null || true
+
+      - name: Find and sign packages
+        id: sign
+        env:
+          WS_SIGNING_KEY_PASSPHRASE: ${{ secrets.WS_SIGNING_KEY_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          PKG_DIR="${{ inputs.package_dir }}"
+          PACKAGES=$(find "$PKG_DIR" -name "*.pkg.tar.zst" | tr '\n' ' ')
+          if [ -z "$PACKAGES" ]; then
+            echo "ERROR: No *.pkg.tar.zst files found in $PKG_DIR"
+            exit 1
+          fi
+          echo "Packages to publish:"
+          for pkg in $PACKAGES; do
+            echo "  $pkg"
+            gpg --batch \
+                --passphrase "$WS_SIGNING_KEY_PASSPHRASE" \
+                --pinentry-mode loopback \
+                --detach-sign --no-armor "$pkg"
+          done
+          echo "packages=$PACKAGES" >> "$GITHUB_OUTPUT"
+
+      - name: Download existing repository database
+        env:
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+        run: |
+          mkdir -p /tmp/repo-db
+          rclone --config /tmp/rclone.conf copy \
+            "warmshower-r2:${R2_BUCKET}/${{ inputs.arch }}/warmshower.db.tar.gz" \
+            /tmp/repo-db/ 2>/dev/null || echo "No existing database — will create new one."
+
+      - name: Update repository database
+        run: |
+          set -euo pipefail
+          # Run repo-add in an Arch Linux container (pacman tooling required)
+          docker run --rm \
+            -v "/tmp/repo-db:/repo-db" \
+            -v "$(pwd)/${{ inputs.package_dir }}:/packages" \
+            archlinux:base-devel \
+            bash -c "repo-add --verify /repo-db/warmshower.db.tar.gz /packages/*.pkg.tar.zst"
+
+      - name: Upload packages, signatures, and database to R2
+        env:
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          WS_PACKAGE_REPOSITORY: ${{ vars.WS_PACKAGE_REPOSITORY }}
+        run: |
+          set -euo pipefail
+          ARCH="${{ inputs.arch }}"
+          PKG_DIR="${{ inputs.package_dir }}"
+          BASE_URL="${WS_PACKAGE_REPOSITORY:-https://repo.warmshower.ai}"
+
+          # Upload packages and their signatures
+          rclone --config /tmp/rclone.conf copy \
+            --include "*.pkg.tar.zst" \
+            --include "*.pkg.tar.zst.sig" \
+            "$PKG_DIR/" \
+            "warmshower-r2:${R2_BUCKET}/${ARCH}/"
+
+          # Upload updated database
+          rclone --config /tmp/rclone.conf copy \
+            /tmp/repo-db/ \
+            "warmshower-r2:${R2_BUCKET}/${ARCH}/"
+
+          echo ""
+          echo "=== Published successfully ==="
+          echo "Available at: ${BASE_URL}/${ARCH}/"
+          find "$PKG_DIR" -name "*.pkg.tar.zst" -exec basename {} \; | sed 's/^/  /'
