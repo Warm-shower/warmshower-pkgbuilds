@@ -1,11 +1,12 @@
-# Maintainer: Vladislav Nepogodin (vnepogodin) <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin (vnepogodin) <upstream-maintainer>
 
 pkgname=warmshower-zsh-config
 pkgver=1.0.3
 pkgrel=1
 pkgdesc="Zsh configuration for WarmShower OS"
 arch=(any)
-url="https://github.com/CachyOS/$pkgname"
+url="https://github.com/Warm-shower/$pkgname"
 license=(GPL-1.0-only)
 depends=(
   fzf
@@ -23,11 +24,10 @@ depends=(
 makedepends=(
   git
 )
-source=("git+${url}.git?signed#tag=v${pkgver}")
-sha256sums=('131d830ced9cda5f7e7058c00aa91075f88c3e7e97dcb92d755537bf5cd459d7')
-validpgpkeys=(
-  B1B70BB1CD56047DEF31DE2EB62C3D10C54D5DA9  # Vladislav Nepogodin <upstream-maintainer>
-)
+source=("git+${url}.git#tag=v${pkgver}")
+sha256sums=('SKIP')
+# Note: validpgpkeys removed — source is now Warm-shower/warmshower-zsh-config fork.
+# Tags are created by WarmShower OS maintainers, not upstream CachyOS developers.
 
 package() {
     cd $srcdir/$pkgname

@@ -1,4 +1,5 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 # Contributor: SoulHarsh007 <admin@soulharsh007.dev>
 
 pkgname=warmshower-kde-settings
@@ -6,7 +7,7 @@ pkgdesc='WarmShower OS KDE settings'
 pkgver=4.9
 pkgrel=1
 arch=('any')
-url="https://github.com/cachyos/$pkgname"
+url="https://github.com/Warm-shower/$pkgname"
 license=(GPL-1.0-only)
 depends=('ttf-fantasque-nerd'
     'noto-fonts'
@@ -18,8 +19,8 @@ makedepends=('coreutils')
 install="$pkgname.install"
 provides=('warmshower-desktop-settings')
 conflicts=('warmshower-desktop-settings')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha512sums=('8e81881d58a715741f33e904608c0e5bf9f6e3cba0547d3d37b94e2f88f50717d493c5a164dbdecefb661b398fcd60f253b73e409ac23deff0a008751779c3ed')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/Warm-shower/$pkgname/archive/$pkgver.tar.gz")
+sha512sums=('SKIP')
 
 package() {
     install -d "$pkgdir/etc"
