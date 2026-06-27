@@ -1,10 +1,15 @@
-# Maintainer: Robin Candau <antiz@archlinux.org>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Robin Candau <antiz@archlinux.org>
+#
+# TODO (WS-040): Fork Antiz96/arch-update → Warm-shower/warmshower-update
+# and update source= URL once fork is created. For now, pointing to upstream
+# arch-update at the version that was previously used.
 
 pkgname=warmshower-update
 pkgver=3.20.2
 pkgrel=1
 pkgdesc="An update notifier & applier that assists you with important pre / post update tasks"
-url="https://github.com/CachyOS/warmshower-update"
+url="https://github.com/Warm-shower/warmshower-update"
 arch=('any')
 license=('GPL-3.0-or-later')
 depends=('bash' 'systemd' 'pacman' 'pacman-contrib' 'archlinux-contrib' 'curl' 'fakeroot' 'util-linux'
@@ -23,8 +28,9 @@ optdepends=('paru: AUR Packages support'
             'sudo: Privilege elevation'
             'sudo-rs: Privilege elevation'
             'opendoas: Privilege elavation')
-source=("git+https://github.com/CachyOS/warmshower-update#commit=62389486ad4c11aed8c2d349a5916928d45f8503")
-sha256sums=('476925eabe76af7360fc3a15213d66bc7d6ced5402d6a3f4a0cca5a7b07d8d2a')
+# Temporary: using upstream arch-update source until Warm-shower/warmshower-update fork is created (WS-040)
+source=("git+https://github.com/Antiz96/arch-update#tag=v${pkgver}")
+sha256sums=('SKIP')
 
 prepare() {
     cd "${pkgname}"
