@@ -1,4 +1,5 @@
-# Maintainer: SoulHarsh007 <harsh.peshwani@outlook.com>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: SoulHarsh007 <harsh.peshwani@outlook.com>
 
 pkgname=warmshower-chroot
 pkgver=1.3.0
@@ -7,16 +8,14 @@ pkgdesc='Chroot helper for WarmShower OS'
 arch=('x86_64')
 groups=('warmshower')
 license=(BSD-3-Clause)
-url="https://github.com/CachyOS/warmshower-chroot"
+url="https://github.com/Warm-shower/$pkgname"
 depends=('arch-install-scripts' 'util-linux')
 optdepends=('btrfs-progs: for btrfs support' 'cryptsetup: for LUKS support' 'zfs-utils: for ZFS support')
 makedepends=('git' 'cargo' 'lld' 'clang' 'llvm')
-source=("git+${url}?signed#tag=${pkgver}")
-b2sums=('b401824acfe0d77267329f574c964fe43ade2f599f9378e72746f7b347fc2ad341e08f7bc617587799200215c6e7ce69106764fe9d02357c00c7b70b83bd7277')
-validpgpkeys=(
-  2BDE2DF6DDC89DBA55698CA4D06942E10F32FD49 # SoulHarsh007 <harsh.peshwani@outlook.com>
-  6FE9632C37251BCE0E04551DBFDF8F508D7F0B79 # SoulHarsh007 (new signing key) <harsh.peshwani@outlook.com>
-)
+source=("git+${url}#tag=${pkgver}")
+b2sums=('SKIP')
+# Note: validpgpkeys removed — source is now Warm-shower/warmshower-chroot fork.
+# Tags are created and signed by WarmShower OS maintainers.
 
 prepare() {
   cd "${srcdir}/${pkgname}"

@@ -1,5 +1,6 @@
-# Maintainer: Peter Jung ptr1337 <admin@ptr1337.dev>
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Peter Jung ptr1337 <admin@ptr1337.dev>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 # Contributor: Philip Müller <philm[at]manjaro[dog]org>
 
 pkgname=warmshower-calamares
@@ -8,7 +9,7 @@ pkgrel=1
 pkgdesc='Distribution-independent installer framework'
 arch=('x86_64')
 license=(GPL-3.0-or-later)
-url="https://github.com/CachyOS/warmshower-calamares"
+url="https://github.com/Warm-shower/$pkgname"
 conflicts=('calamares')
 provides=('calamares')
 depends=(
@@ -54,7 +55,7 @@ makedepends=(
 )
 sha256sums=('SKIP')
 # Bootloader
-source=(calamares::"git+${url}.git#branch=cachyos")  # upstream branch name
+source=(calamares::"git+${url}.git")  # default branch
 options=('!emptydirs')
 
 prepare() {
