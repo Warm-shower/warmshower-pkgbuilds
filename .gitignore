@@ -16,6 +16,7 @@
 pkg/
 src/
 .vscode/
+docs/
 
 ### CMake ###
 CMakeLists.txt.user
