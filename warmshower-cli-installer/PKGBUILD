@@ -1,4 +1,5 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 
 pkgname=warmshower-cli-installer-new
 _pkgname=New-Cli-Installer
@@ -7,14 +8,13 @@ pkgrel=1
 pkgdesc='New CLI installer for WarmShower OS'
 arch=(x86_64)
 license=(GPL-3.0-or-later)
-url="https://github.com/cachyos/new-cli-installer"
+url="https://github.com/Warm-shower/New-Cli-Installer"
 depends=('fzf' 'gawk' 'chwd' 'warmshower-rate-mirrors' 'curl' 'coreutils' 'util-linux' 'gptfdisk')
 makedepends=('cmake' 'ninja' 'git' 'lld' 'clang' 'llvm')
-source=("$pkgname::git+$url.git#tag=${pkgver}?signed")
-sha256sums=('8f7f9f07d1d4d521d923d40bcdc574d170e84a54d38b9ef0a0782c5eeb4eae5b')
-validpgpkeys=(
-  'B1B70BB1CD56047DEF31DE2EB62C3D10C54D5DA9'  # Vladislav Nepogodin <upstream-maintainer>
-)
+# TODO (WS-029): Create v0.11.0 tag in Warm-shower/New-Cli-Installer, then restore #tag=${pkgver}
+source=("$pkgname::git+$url.git")
+sha256sums=('SKIP')
+# Note: validpgpkeys removed — source is now Warm-shower/New-Cli-Installer fork.
 
 build() {
   cd "$srcdir/$pkgname"

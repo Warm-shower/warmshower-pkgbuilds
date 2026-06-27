@@ -1,14 +1,15 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 
 pkgname=warmshower-hello
-_pkgname=WarmShower-Welcome
+_pkgname=Warmshower-Welcome
 pkgver=0.25.0
 pkgrel=1
 pkgdesc='Welcome screen for WarmShower OS'
 arch=('x86_64')
 groups=('warmshower')
 license=(GPL-3.0-or-later)
-url="https://github.com/cachyos/cachyos-welcome"
+url="https://github.com/Warm-shower/Warmshower-Welcome"
 depends=(
   glib2
   gtk3
@@ -24,11 +25,10 @@ makedepends=(
   llvm
   meson
 )
-source=("${pkgname}::git+$url.git#tag=v${pkgver}?signed")
-sha512sums=('0541decb87d8b259ef18d0d541c137f4cb1814a82ce075c9e3301f3d7bebe1367eb0f29ee35a9f5b8be3fd9b4afb9b7e07734030c44743463c2e5e168d41cf64')
-validpgpkeys=(
-  'B1B70BB1CD56047DEF31DE2EB62C3D10C54D5DA9'  # Vladislav Nepogodin <upstream-maintainer>
-)
+# TODO (WS-026): Create v0.25.0 tag in Warm-shower/Warmshower-Welcome fork, then restore #tag=v${pkgver}
+source=("${pkgname}::git+$url.git")
+sha512sums=('SKIP')
+# Note: validpgpkeys removed — source is now Warm-shower/Warmshower-Welcome fork.
 
 build() {
   cd "${srcdir}/${pkgname}"

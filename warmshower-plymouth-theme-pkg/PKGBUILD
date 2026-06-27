@@ -1,11 +1,12 @@
-# Maintainer: SoulHarsh007 <admin@soulharsh007.dev>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: SoulHarsh007 <admin@soulharsh007.dev>
 
 pkgname=warmshower-plymouth-theme
 pkgver=1
 pkgrel=1
 groups=("warmshower")
 arch=("any")
-url="https://github.com/CachyOS/${pkgname}"
+url="https://github.com/Warm-shower/${pkgname}"
 license=("GPL")
 pkgdesc="WarmShower OS Plymouth theme"
 depends=("plymouth")
