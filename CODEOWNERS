@@ -1,0 +1,16 @@
+# WarmShower OS — CODEOWNERS
+# All changes to this repository require review from the WarmShower OS maintainers team.
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @Warm-shower/maintainers
+
+# Infrastructure packages — require additional review
+warmshower-keyring-pkg/      @Warm-shower/maintainers
+warmshower-mirrorlist-pkg/   @Warm-shower/maintainers
+
+# CI and workflow changes — require maintainer review
+.github/                     @Warm-shower/maintainers
+
+# Documentation
+docs/                        @Warm-shower/maintainers

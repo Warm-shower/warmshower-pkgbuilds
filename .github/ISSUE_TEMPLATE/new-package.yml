@@ -1,0 +1,51 @@
+name: New Package Request
+description: Request a new package be added to the WarmShower OS repository
+title: "[NEW] <package-name>"
+labels: ["new-package", "needs-review"]
+
+body:
+  - type: input
+    id: package_name
+    attributes:
+      label: Package Name
+      description: The proposed warmshower-* package name
+      placeholder: e.g. warmshower-new-tool
+    validations:
+      required: true
+
+  - type: input
+    id: upstream_url
+    attributes:
+      label: Upstream Repository URL
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ownership
+    attributes:
+      label: Package Ownership Category
+      description: See MIGRATION_MASTER.md §10-11 for category definitions
+      options:
+        - "Category A — Independent software (needs own repo)"
+        - "Category B — Packaging only (stays in warmshower-pkgbuilds)"
+        - "Category C — Infrastructure"
+        - "Category D — Third-party (stay upstream)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: justification
+    attributes:
+      label: Why should this be a WarmShower OS package?
+      description: Explain what WarmShower OS branding, patches, or changes would be applied
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: This package does not already exist in the repository
+        - label: This package is not better maintained as a pure AUR package
+        - label: I have a draft PKGBUILD ready or can provide one

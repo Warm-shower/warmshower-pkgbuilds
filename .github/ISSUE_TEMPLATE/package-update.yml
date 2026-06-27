@@ -1,0 +1,60 @@
+name: Package Update Request
+description: Request an update for a WarmShower OS package
+title: "[UPDATE] <package-name> <new-version>"
+labels: ["package-update", "needs-review"]
+assignees:
+  - Warm-shower/maintainers
+
+body:
+  - type: input
+    id: package_name
+    attributes:
+      label: Package Name
+      description: The exact name of the package in warmshower-pkgbuilds
+      placeholder: e.g. warmshower-settings
+    validations:
+      required: true
+
+  - type: input
+    id: current_version
+    attributes:
+      label: Current Version
+      description: The pkgver currently in the PKGBUILD
+      placeholder: e.g. 1.2.3
+    validations:
+      required: true
+
+  - type: input
+    id: new_version
+    attributes:
+      label: New Version
+      description: The version to update to
+      placeholder: e.g. 1.2.4
+    validations:
+      required: true
+
+  - type: input
+    id: upstream_url
+    attributes:
+      label: Upstream Release URL
+      description: Link to the upstream release (GitHub release, changelog, etc.)
+      placeholder: https://github.com/...
+    validations:
+      required: false
+
+  - type: textarea
+    id: changes
+    attributes:
+      label: Notable Changes
+      description: Brief summary of what changed in the new version
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have checked that no existing PR covers this update
+        - label: The new version is available at the source URL in the PKGBUILD
+        - label: I have tested building the package locally with `makepkg -si`
