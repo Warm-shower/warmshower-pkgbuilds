@@ -1,32 +1,80 @@
 <div align="center">
-  <img src="alt="WarmShower OS"></img>
-  <br/>
-  <h1 align="center">WarmShower OS</h1>
+  <h1 align="center">WarmShower OS PKGBUILDs</h1>
+  <p align="center">Package build scripts for WarmShower OS — an AI-first Linux distribution based on Arch Linux.</p>
 </div>
 
-# WarmShower OS PKGBUILDS
+## Overview
 
-[WarmShower OS](https://warmshower.example.org/) PKGBUILDS is a collection of [PKGBUILD](https://wiki.archlinux.org/index.php/PKGBUILD) scripts for building and installing packages on any Arch Linux-based operating system.
+This repository contains all [PKGBUILD](https://wiki.archlinux.org/index.php/PKGBUILD) scripts for packages maintained by the WarmShower OS project.
+
+WarmShower OS packages are served from `https://repo.warmshower.ai/` once the repository infrastructure (WS-036) is live.
+
+## Repository Layout
+
+```
+warmshower-pkgbuilds/
+  warmshower-*/       — WarmShower OS identity packages
+  docs/               — Engineering documentation
+  .github/
+    workflows/        — CI: validation, version checking, build & publish
+    scripts/          — Helper scripts for CI and maintenance
+    ISSUE_TEMPLATE/   — Standardized issue templates
+  CODEOWNERS          — Code review requirements
+```
+
+## Using These Packages
+
+**Install from the WarmShower repository (recommended):**
+
+```bash
+# Add WarmShower keyring and mirrorlist
+sudo pacman -U https://repo.warmshower.ai/x86_64/warmshower-keyring-<ver>-any.pkg.tar.zst
+sudo pacman -U https://repo.warmshower.ai/x86_64/warmshower-mirrorlist-<ver>-any.pkg.tar.zst
+
+# Add [warmshower] to /etc/pacman.conf:
+# [warmshower]
+# Include = /etc/pacman.d/warmshower-mirrorlist
+
+sudo pacman -Syu
+```
+
+**Build from source:**
+
+```bash
+git clone https://github.com/Warm-shower/warmshower-pkgbuilds.git
+cd warmshower-pkgbuilds/<package>
+makepkg -si
+```
 
 ## Prerequisites
 
-In order to use these PKGBUILD scripts, you will need to have the following tools and libraries installed on your system:
-
 - [Git](https://git-scm.com/)
-- [make](https://www.gnu.org/software/make/)
-- [gcc](https://gcc.gnu.org/)
-- [binutils](https://www.gnu.org/software/binutils/)
-- [fakeroot](https://wiki.archlinux.org/index.php/Fakeroot)
+- [base-devel](https://archlinux.org/groups/x86_64/base-devel/) (includes gcc, make, binutils, fakeroot)
 
-## Usage
+## Contributing
 
-To build and install a package using one of the PKGBUILD scripts in this repository, follow these steps:
+Please read [docs/repository-standards.md](docs/repository-standards.md) before contributing.
 
-1. Clone this repository: `git clone https://github.com/Rawknee-69/warmshower-pkgbuilds.git`
-2. Navigate to the directory of the PKGBUILD script you want to use: `cd warmshower-pkgbuilds/<package>`
-3. Build the package: `makepkg -si`
-4. Install the package: `sudo pacman -U <packagename>.pkg.tar.zst`
+All PKGBUILD contributions must:
+- Pass `namcap PKGBUILD` with no errors
+- Pass `makepkg --verifysource` (no SKIP checksums on static sources)
+- Follow the commit message format in repository-standards.md
+- Be submitted via pull request (no direct pushes to master)
 
-## Contributions
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CODEOWNERS](CODEOWNERS) for review requirements.
 
-If you would like to contribute to WarmShower OS PKGBUILDS, please fork this repository and submit a pull request with your changes. Please be sure to follow the [ArchLinux Packaging Guidelines](https://wiki.archlinux.org/title/Arch_package_guidelines) when creating or modifying PKGBUILD scripts.
+## Infrastructure Status
+
+| Component | Status |
+|---|---|
+| Package repository (`repo.warmshower.ai`) | Pending WS-036 |
+| GPG signing key | Pending WS-001 |
+| Cloudflare R2 bucket | Pending WS-036 |
+| CI validation | ✅ Active |
+| Version monitoring | ✅ Active |
+
+## Links
+
+- **Website:** [warmshower.ai](https://warmshower.ai)
+- **Issues:** [github.com/Warm-shower/warmshower-pkgbuilds/issues](https://github.com/Warm-shower/warmshower-pkgbuilds/issues)
+- **Engineering Spec:** MIGRATION_MASTER.md
