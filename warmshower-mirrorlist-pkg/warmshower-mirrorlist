@@ -8,13 +8,16 @@
 # To rank mirrors by speed, install and run rate-mirrors:
 #   rate-mirrors --save /etc/pacman.d/warmshower-mirrorlist warmshower
 #
-# Mirror infrastructure status: PENDING (WS-036a)
-# Once repo.warmshower.ai is live, mirrors will be populated here.
-# Until then, this file serves as the canonical template.
+# Mirror infrastructure status: PENDING (WS-036)
+# Once repo.warmshower.ai is live, the primary CDN mirror below will serve packages.
+# The [warmshower] section in /etc/pacman.conf should reference this file:
+#
+#   [warmshower]
+#   Include = /etc/pacman.d/warmshower-mirrorlist
 #
 ## Primary CDN (Global)
 ## tier=1 code=GLOBAL
-Server = https://repo.warmshower.ai/repo/$arch/$repo
+Server = https://repo.warmshower.ai/$arch
 #
 ## Additional mirrors will be added as the WarmShower mirror network grows.
 ## Mirror operators: contact admin@warmshower.ai to be listed.

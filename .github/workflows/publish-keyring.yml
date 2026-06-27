@@ -1,0 +1,35 @@
+name: Build and Publish warmshower-keyring
+
+# Triggers on any push to master that touches the keyring package,
+# or on manual dispatch.
+#
+# NOTE: The warmshower.gpg in warmshower-keyring-pkg is currently a
+# placeholder key (pre-WS-001). After WS-001 is complete (real GPG key
+# generated on air-gapped machine), the .gpg must be replaced and
+# sha512sums regenerated before this workflow will produce a trusted keyring.
+#
+# See: docs/signing-architecture.md
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "warmshower-keyring-pkg/**"
+      - ".github/workflows/publish-keyring.yml"
+      - ".github/workflows/build-and-publish.yml"
+      - ".github/workflows/r2-publish.yml"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for manual dispatch"
+        required: false
+        default: "Manual publish"
+
+jobs:
+  build-and-publish:
+    uses: ./.github/workflows/build-and-publish.yml
+    with:
+      package_dir: warmshower-keyring-pkg
+      arch: x86_64
+    secrets: inherit

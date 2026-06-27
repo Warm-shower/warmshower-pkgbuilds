@@ -1,0 +1,31 @@
+name: Build and Publish warmshower-mirrorlist
+
+# Triggers on any push to master that touches the mirrorlist package,
+# or on manual dispatch (for the Phase 4 bootstrap run).
+#
+# This is the entry-point workflow for the mirrorlist pilot package.
+# It calls the shared build-and-publish reusable workflow.
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "warmshower-mirrorlist-pkg/**"
+      - ".github/workflows/publish-mirrorlist.yml"
+      - ".github/workflows/build-and-publish.yml"
+      - ".github/workflows/r2-publish.yml"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for manual dispatch"
+        required: false
+        default: "Manual publish"
+
+jobs:
+  build-and-publish:
+    uses: ./.github/workflows/build-and-publish.yml
+    with:
+      package_dir: warmshower-mirrorlist-pkg
+      arch: x86_64
+    secrets: inherit

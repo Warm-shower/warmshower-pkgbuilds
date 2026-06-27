@@ -1,13 +1,13 @@
 pkgbase = warmshower-mirrorlist
 	pkgdesc = WarmShower OS repository mirrorlist
 	pkgver = 27
-	pkgrel = 1
-	url = https://github.com/Rawknee-69/warmshower-pkgbuilds
+	pkgrel = 2
+	url = https://github.com/Warm-shower/warmshower-pkgbuilds
 	arch = any
 	groups = warmshower
 	license = GPL-3.0-or-later
 	source = warmshower-mirrorlist
-	sha512sums = SKIP
+	sha512sums = a381cfc41132d0180f1738908c9bb46602ca485e0e94c505f440f8eff53ca4803564c85eab91d61be20c039e6bfe28743ef38341bbfbf500d1a5e810048b9437
 
 pkgname = warmshower-mirrorlist
 pkgname = warmshower-v3-mirrorlist

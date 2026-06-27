@@ -34,3 +34,11 @@ _deps
 *-prefix/
 glibc/glibc
 # End of https://www.toptal.com/developers/gitignore/api/cmake,archlinuxpackages
+
+# Docs containing infrastructure details (R2 endpoints, account IDs)
+# Keep locally but never commit — contains real Cloudflare account IDs
+docs/cloudflare-r2-setup.md
+docs/package-repository-hosting.md
+
+# Phase 4+ operational reports — local documentation only
+docs/phase4-*.md

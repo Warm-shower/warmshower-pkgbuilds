@@ -12,7 +12,7 @@ groups=(warmshower)
 conflicts=('warmshower-mirrorlist' 'warmshower-v3-mirrorlist' 'warmshower-v4-mirrorlist')
 replaces=('warmshower-mirrorlist' 'warmshower-v3-mirrorlist' 'warmshower-v4-mirrorlist')
 source=(warmshower-mirrorlist)
-sha512sums=('SKIP')
+sha512sums=('a381cfc41132d0180f1738908c9bb46602ca485e0e94c505f440f8eff53ca4803564c85eab91d61be20c039e6bfe28743ef38341bbfbf500d1a5e810048b9437')
 
 package_warmshower-mirrorlist() {
  backup=("etc/pacman.d/$pkgname")  # to keep possibly ranked mirrorlist

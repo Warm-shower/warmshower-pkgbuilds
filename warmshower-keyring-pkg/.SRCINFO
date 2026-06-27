@@ -1,8 +1,8 @@
 pkgbase = warmshower-keyring
 	pkgdesc = WarmShower OS keyring
 	pkgver = 20240331
-	pkgrel = 1
-	url = https://warmshower.example.org
+	pkgrel = 2
+	url = https://github.com/Warm-shower/warmshower-pkgbuilds
 	install = warmshower-keyring.install
 	arch = any
 	groups = warmshower
@@ -11,9 +11,9 @@ pkgbase = warmshower-keyring
 	source = warmshower-revoked
 	source = warmshower-trusted
 	source = warmshower-keyring.install
-	sha512sums = 1933bb08294113c95ce05e608b5f1c8643e8f9afffc97e8bf479626440e31d451f54a5e92bbac6a20a991fa874eec47b36b2722b6529d87afb384bd2c32a5f30
+	sha512sums = e161959fb43c57c1f78c25a2abdf5f1b99551d938cca509d8cc93da664cfbb7fc63a4b53c042457d5c53fb7df0504410e7313b151917d0aa131192c771f23b14
 	sha512sums = cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
-	sha512sums = 4c2677da43b2032453346605cdf869f8c584c6f7d22009cd47f1585fc01c81e91917db237c383dc64ef90baa901a40e887a8a8e693fb97d1851040a16d6b8b62
-	sha512sums = SKIP
+	sha512sums = 9c7678b14bdea5917e760b8d2bdc42467b444064ad5adc82a0b5343176c8ba49a4ad9386d53cb4760c0b9b657d3c3037b0e212fc9db36f389bf388fe6a5ce58e
+	sha512sums = e1151380a231426036f155b2f67268b3c08e75702225605e2be23f5c6a585c24e2d7d1a707790a3d439cf6f4cc39e70281a8059980a37b4788b0c45efc757d4f
 
 pkgname = warmshower-keyring

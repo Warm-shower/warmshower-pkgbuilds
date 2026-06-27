@@ -1,1 +1,9 @@
+# TODO (WS-002): Replace this fingerprint with the real WarmShower OS master key
+# fingerprint after WS-001 is complete.
+# Format: <FINGERPRINT>:<trust_level>:
+# Trust level 4 = full trust (required for package signature verification)
+# Example: AABBCCDDEEFF00112233445566778899AABBCCDD:4:
+#
+# Current value is a placeholder — this key CANNOT verify WarmShower packages.
+# The warmshower.gpg in this directory must also be replaced simultaneously.
 882DCFE48E2051D48E2562ABF3B607488DB35A47:4:

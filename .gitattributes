@@ -1,0 +1,17 @@
+# Enforce consistent line endings across all platforms.
+# All text files use LF in the repository.
+# This ensures that sha512sums in PKGBUILDs match when built on Linux.
+
+* text=auto eol=lf
+
+# Binary files — do not touch line endings
+*.pkg.tar.zst   binary
+*.pkg.tar.zst.sig binary
+*.gpg           binary
+*.png           binary
+*.jpg           binary
+*.ico           binary
+*.ttf           binary
+*.otf           binary
+*.woff          binary
+*.woff2         binary
