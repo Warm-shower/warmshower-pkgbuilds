@@ -1,5 +1,6 @@
-# Maintainer: Piotr Górski <lucjan.lucjanov@gmail.com>
-# Maintainer: Vasiliy Stelmachenok <ventureo@cachyos.org>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Piotr Górski <lucjan.lucjanov@gmail.com>
+# Upstream-Maintainer: Vasiliy Stelmachenok <ventureo@cachyos.org>
 # Contributor: Michael Bolden <me@sm9.dev>
 
 pkgname=warmshower-hooks
@@ -11,9 +12,9 @@ makedepends=('git')
 depends=('systemd')
 arch=('any')
 license=(GPL-3.0-or-later)
-url="https://github.com/cachyos/${pkgname}/"
-source=("git+https://github.com/CachyOS/warmshower-hooks#tag=$pkgver")
-sha512sums=('f118ebcea77afd1ac801561da23f945e2d9b446b12d8724912c9fda90cc89eb25f9426c38a2bd0a471ef9120198b2addc5982f97152b0bd1cbc50d242bcc0bc2')
+url="https://github.com/Warm-shower/$pkgname"
+source=("git+${url}#tag=$pkgver")
+sha512sums=('SKIP')
 
 package() {
   cd "$pkgname"

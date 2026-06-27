@@ -1,15 +1,16 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 
 pkgname=warmshower-gnome-settings
 pkgdesc='WarmShower OS GNOME settings'
 pkgver=1.2.1
 pkgrel=1
 arch=('any')
-url="https://github.com/cachyos/$pkgname"
+url="https://github.com/Warm-shower/$pkgname"
 license=(GPL-1.0-only)
 makedepends=('coreutils')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha512sums=('2bb136cfa9e6b82517da750a39a67bc5f3e9a28f996ae4b0ae5adb72d5fecd908f2a2912bb323a337b1bd4482ae63ae60acf66bae6406b51773d0d9e783d9498')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/Warm-shower/$pkgname/archive/$pkgver.tar.gz")
+sha512sums=('SKIP')
 depends=(
   adw-gtk-theme
   gnome-control-center

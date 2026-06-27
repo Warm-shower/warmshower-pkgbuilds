@@ -1,4 +1,5 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 # Contributor: SoulHarsh007 <admin@soulharsh007.dev>
 # Contributor: Shendisx <aarrayyzuelo@protonmail.com>
 
@@ -7,10 +8,10 @@ pkgdesc='WarmShower OS Hyprland settings'
 pkgver=1.4.4
 pkgrel=1
 arch=('any')
-url="https://github.com/cachyos/$pkgname"
+url="https://github.com/Warm-shower/$pkgname"
 license=(GPL-1.0-only)
 makedepends=('coreutils')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::https://github.com/Warm-shower/$pkgname/archive/$pkgver.tar.gz")
 sha512sums=('64a04b9f0adbc37bd7f6f19a9bd099fc0a30bad3b7e42207653f83cc3ecac9086ee9c3209e8be69d84eeac6a7f3f5611ae85183bd83e39feaa80af046fb4bf86')
 depends=(
   warmshower-alacritty-config
