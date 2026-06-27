@@ -1,4 +1,5 @@
-# Maintainer: Vladislav Nepogodin (upstream)
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin (upstream)
 
 pkgname=warmshower-nord-gtk-theme-git
 pkgver=r10.18b1535

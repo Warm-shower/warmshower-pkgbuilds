@@ -1,4 +1,5 @@
-# Maintainer: Vasiliy Stelmachenok <ventureo@cachyos.org>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vasiliy Stelmachenok <ventureo@cachyos.org>
 pkgname=warmshower-kdump-tools
 pkgver=1.1.1
 pkgrel=1

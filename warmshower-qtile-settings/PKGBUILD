@@ -1,4 +1,5 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 # Maintainer: Aarrayy <lp610mh@gmail.com>
 
 pkgname=warmshower-qtile-settings

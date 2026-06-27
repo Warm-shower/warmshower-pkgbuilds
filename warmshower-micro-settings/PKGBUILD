@@ -1,4 +1,5 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 
 pkgname=warmshower-micro-settings
 pkgdesc='WarmShower OS micro settings'

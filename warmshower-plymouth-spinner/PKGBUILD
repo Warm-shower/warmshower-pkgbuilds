@@ -1,4 +1,5 @@
-# Maintainer: Michael Bolden Jnr SM9(); <me@sm9.dev>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Michael Bolden Jnr SM9(); <me@sm9.dev>
 
 pkgname=warmshower-plymouth-spinner
 pkgver=1

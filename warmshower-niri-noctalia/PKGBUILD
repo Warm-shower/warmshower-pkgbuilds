@@ -1,4 +1,5 @@
-# Maintainer: Lysec <admin@lysec.dev>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Lysec <admin@lysec.dev>
 
 pkgname=warmshower-niri-noctalia
 pkgdesc='WarmShower OS Niri (+Noctalia) settings'

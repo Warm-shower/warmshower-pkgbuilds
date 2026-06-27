@@ -1,4 +1,5 @@
-# Maintainer: Nico <d3sox at protonmail dot com>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Nico <d3sox at protonmail dot com>
 
 pkgname=warmshower-nord-kde-theme-git
 _themeName=WarmShower-Nord-round

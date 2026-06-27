@@ -1,4 +1,5 @@
-# Maintainer: Vladislav Nepogodin <upstream-maintainer>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Vladislav Nepogodin <upstream-maintainer>
 
 pkgname=warmshower-sysctl-manager-git
 pkgver=1.0.0.r0.g3bd74be

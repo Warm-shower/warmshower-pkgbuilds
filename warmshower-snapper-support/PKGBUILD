@@ -1,4 +1,5 @@
-# Maintainer: Nekoh
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Nekoh
 
 pkgname=warmshower-snapper-support
 pkgver=1.0.2

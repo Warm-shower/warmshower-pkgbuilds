@@ -1,4 +1,5 @@
-# Maintainer: Lysec <admin@lysec.dev>
+# Maintainer: WarmShower OS <admin@warmshower.ai>
+# Upstream-Maintainer: Lysec <admin@lysec.dev>
 
 pkgname=warmshower-mangowc-dms
 pkgdesc='WarmShower OS MangoWC (+DMS) settings'
