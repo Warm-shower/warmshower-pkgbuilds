@@ -1,0 +1,113 @@
+name: Phase 6 — Bootstrap Package Build
+
+# Builds all minimum bootstrap packages for Phase 6 validation.
+# Does NOT publish to R2 (that requires WS-036 to be complete).
+# Does NOT build linux-warmshower (multi-hour; use the existing build-and-publish workflow).
+#
+# Packages built:
+#   - warmshower-keyring
+#   - warmshower-mirrorlist (all three variants)
+#   - warmshower-settings
+#   - warmshower-hooks
+#   - mkinitcpio
+#
+# Trigger manually via workflow_dispatch, or on push to these package dirs.
+# After all packages build successfully, run scripts/vm-test-phase6.sh locally.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for manual build"
+        required: false
+        default: "Phase 6 bootstrap validation"
+  push:
+    branches:
+      - master
+    paths:
+      - "warmshower-keyring-pkg/**"
+      - "warmshower-mirrorlist-pkg/**"
+      - "warmshower-settings-pkg/**"
+      - "warmshower-hooks/**"
+      - "mkinitcpio/**"
+
+jobs:
+  build-bootstrap:
+    name: Build ${{ matrix.package }}
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - warmshower-keyring-pkg
+          - warmshower-mirrorlist-pkg
+          - warmshower-settings-pkg
+          - warmshower-hooks
+          - mkinitcpio
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup build environment
+        run: |
+          pacman -Syu --noconfirm
+          useradd -m builder
+          echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+          chmod -R a+rw .
+
+      - name: Build ${{ matrix.package }}
+        run: |
+          cd "${{ matrix.package }}"
+          sudo -H -u builder makepkg --syncdeps --noconfirm --cleanbuild
+
+      - name: Run validation tests
+        run: |
+          cd "${{ matrix.package }}"
+          # Check 1: Verify checksums
+          sudo -H -u builder makepkg --verifysource --skippgpcheck --noprepare \
+              --noextract 2>&1 && echo "PASS: verifysource" || echo "FAIL: verifysource"
+          # Check 2: namcap lint
+          pacman -S --noconfirm namcap
+          namcap PKGBUILD 2>&1
+          # Check 3: No CachyOS branding in pkgname/pkgdesc/url
+          if grep -E '^(pkgname|pkgdesc|url)=' PKGBUILD | grep -qi 'cachyos'; then
+              echo "FAIL: CachyOS branding in PKGBUILD identity fields"
+              exit 1
+          else
+              echo "PASS: No CachyOS branding in pkgname/pkgdesc/url"
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap-${{ matrix.package }}
+          path: "${{ matrix.package }}/*.pkg.tar.zst"
+          retention-days: 14
+          if-no-files-found: error
+
+  summary:
+    name: Phase 6 Build Summary
+    needs: build-bootstrap
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Report
+        run: |
+          echo "=== Phase 6 Bootstrap Build Summary ==="
+          echo ""
+          echo "All bootstrap packages have been built."
+          echo "Artifacts are available in the Actions run."
+          echo ""
+          echo "Next steps:"
+          echo "  1. Download all artifacts"
+          echo "  2. Run: scripts/bootstrap-repo.sh --repo-dir /tmp/ws-repo"
+          echo "  3. Copy built .pkg.tar.zst files to /tmp/ws-repo/x86_64/"
+          echo "  4. Run: wsync publish --repo-dir /tmp/ws-repo  (to run repo-add)"
+          echo "  5. Run: scripts/vm-test-phase6.sh --repo-dir /tmp/ws-repo"
+          echo ""
+          echo "NOTE: linux-warmshower is NOT built here (multi-hour build)."
+          echo "      Use the publish-linux-warmshower workflow separately."
+          echo "      Run vm-test-phase6.sh with --skip-kernel-test until it is ready."
